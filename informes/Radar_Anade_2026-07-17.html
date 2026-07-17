@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Radar Ánade</title>
+<style>
+:root{--green:#BCDBCC;--blue:#004459;--bg:#f4f7f6;--white:#fff;--muted:#66777d;}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--blue)}
+header{background:linear-gradient(135deg,var(--green),#e6f2ec);padding:28px 18px;border-bottom:4px solid var(--blue)}
+.wrap{max-width:1180px;margin:auto}
+.brand{display:flex;align-items:center;gap:16px}
+.mark{width:64px;height:64px;border:3px solid var(--blue);border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:28px;background:white}
+h1{margin:0;font-size:clamp(28px,5vw,46px)}
+.sub{margin:6px 0 0;color:#264f5d}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+button,.btn{border:0;border-radius:10px;padding:11px 15px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.primary{background:var(--blue);color:white}
+.secondary{background:white;color:var(--blue);border:1px solid #bfd0d5}
+nav{position:sticky;top:0;background:white;border-bottom:1px solid #dce6e3;z-index:2;overflow:auto;white-space:nowrap}
+.tabs{display:flex;gap:4px;padding:10px 0}
+.tab{background:transparent;color:var(--blue);padding:10px 13px;border-radius:8px}
+.tab.active{background:var(--green)}
+main{padding:24px 18px 60px}
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-bottom:24px}
+.metric{background:white;padding:18px;border-radius:14px;box-shadow:0 4px 16px rgba(0,68,89,.07)}
+.metric strong{font-size:28px;display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.card{background:white;border-radius:14px;padding:18px;box-shadow:0 4px 16px rgba(0,68,89,.07);border-top:5px solid var(--green)}
+.card h3{margin:0 0 8px;font-size:20px}
+.meta{font-size:13px;color:var(--muted);margin-bottom:10px}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.badge{font-size:12px;padding:5px 8px;border-radius:999px;background:#eef4f2}
+.high{background:#ffe2df;color:#8b1e16}
+.medium{background:#fff1cc;color:#765000}
+.low{background:#e5f5e8;color:#276738}
+.card p{line-height:1.45;margin:8px 0}
+.source{color:var(--blue);font-weight:700}
+.empty{background:white;padding:30px;border-radius:14px;text-align:center;color:var(--muted)}
+footer{text-align:center;color:var(--muted);padding:30px}
+@media(max-width:600px){header{padding-top:20px}.mark{width:52px;height:52px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="brand">
+      <div class="mark">Á</div>
+      <div><h1>Radar Ánade</h1><p class="sub">Inteligencia comercial y estratégica · versión de prueba</p></div>
+    </div>
+    <div class="toolbar">
+      <button class="primary" onclick="downloadReport()">Descargar informe HTML</button>
+      <button class="secondary" onclick="window.print()">Imprimir / guardar PDF</button>
+    </div>
+  </div>
+</header>
+<nav>
+  <div class="wrap tabs" id="tabs"></div>
+</nav>
+<main class="wrap">
+  <section class="summary">
+    <div class="metric"><span>Hallazgos</span><strong id="count">0</strong></div>
+    <div class="metric"><span>Prioridad alta</span><strong id="highCount">0</strong></div>
+    <div class="metric"><span>Última actualización</span><strong style="font-size:18px">17/07/2026</strong></div>
+  </section>
+  <section id="content"></section>
+</main>
+<footer>Ánade · Radar semanal de prueba</footer>
+
+<script>
+const items = [{"title":"Nueva planta de inyectables estériles","category":"Oportunidades","sector":"Pharma","priority":"Alta","location":"España","date":"2026-07-17","summary":"Ejemplo de oportunidad comercial para validar el diseño del radar.","impact":"Potencial necesidad de vestuario, lavandería y consumibles de sala limpia.","action":"Identificar compras, operaciones y calidad.","source":"https://example.com"},{"title":"Actualización de guía técnica","category":"Normativa","sector":"Salas limpias estrictas","priority":"Media","location":"Unión Europea","date":"2026-07-16","summary":"Ejemplo de cambio normativo para comprobar la navegación.","impact":"Puede afectar a procedimientos y argumentos comerciales.","action":"Revisar impacto con Calidad.","source":"https://example.com"},{"title":"Tecnología de trazabilidad para lavandería","category":"Productos","sector":"Uso interno","priority":"Media","location":"Internacional","date":"2026-07-15","summary":"Ejemplo de solución tecnológica aplicable a la nueva nave.","impact":"Podría mejorar control, productividad y trazabilidad.","action":"Solicitar demostración.","source":"https://example.com"}];
+const categories = ["Resumen ejecutivo","Oportunidades","Normativa","Ciencia","Competencia","Productos","Licitaciones y concursos","Histórico"];
+let active = "Resumen ejecutivo";
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function renderTabs(){document.getElementById('tabs').innerHTML=categories.map(c=>`<button class="tab ${c===active?'active':''}" onclick="setTab('${c}')">${c}</button>`).join('')}
+function setTab(c){active=c;renderTabs();render()}
+function card(i){const pc=i.priority==='Alta'?'high':i.priority==='Media'?'medium':'low';return `<article class="card"><h3>${esc(i.title)}</h3><div class="meta">${esc(i.date)} · ${esc(i.location)}</div><div class="badges"><span class="badge">${esc(i.sector)}</span><span class="badge ${pc}">Prioridad ${esc(i.priority)}</span></div><p><strong>Resumen:</strong> ${esc(i.summary)}</p><p><strong>Por qué importa:</strong> ${esc(i.impact)}</p><p><strong>Acción:</strong> ${esc(i.action)}</p><a class="source" href="${i.source}" target="_blank" rel="noopener">Abrir fuente ↗</a></article>`}
+function render(){let filtered;if(active==='Resumen ejecutivo')filtered=items.slice(0,5);else if(active==='Histórico')filtered=items;else filtered=items.filter(i=>i.category===active);document.getElementById('content').innerHTML=filtered.length?`<div class="grid">${filtered.map(card).join('')}</div>`:`<div class="empty">No hay hallazgos de prueba en esta sección.</div>`;document.getElementById('count').textContent=items.length;document.getElementById('highCount').textContent=items.filter(i=>i.priority==='Alta').length}
+function downloadReport(){const clone=document.documentElement.cloneNode(true);clone.querySelectorAll('button').forEach(b=>b.remove());const blob=new Blob(['<!doctype html>\n'+clone.outerHTML],{type:'text/html;charset=utf-8'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Radar_Anade_2026-07-17.html';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
+renderTabs();render();
+</script>
+</body>
+</html>
