@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Radar Ánade — Histórico</title>
+<style>
+:root{--green:#BCDBCC;--blue:#004459;--bg:#f4f7f6;--white:#fff;--muted:#66777d}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--blue)}
+header{background:linear-gradient(135deg,var(--green),#e6f2ec);padding:34px 18px;border-bottom:4px solid var(--blue)}
+.wrap{max-width:980px;margin:auto}
+.brand{display:flex;align-items:center;gap:16px}
+.mark{width:62px;height:62px;border:3px solid var(--blue);border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:27px;background:white}
+h1{margin:0;font-size:clamp(30px,5vw,46px)}
+.sub{margin:6px 0 0;color:#264f5d}
+main{padding:28px 18px 60px}
+.panel{background:white;border-radius:16px;padding:20px;box-shadow:0 6px 22px rgba(0,68,89,.08)}
+.report{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:18px 0;border-bottom:1px solid #dfe8e5}
+.report:last-child{border-bottom:0}
+.meta{display:flex;flex-direction:column;gap:5px}
+.date{font-weight:800;font-size:18px}
+.file{color:var(--muted);font-size:14px}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border-radius:10px;padding:11px 15px;font-weight:700}
+.primary{background:var(--blue);color:white}
+.secondary{background:var(--green);color:var(--blue)}
+.note{margin-top:18px;color:var(--muted);font-size:14px}
+footer{text-align:center;color:var(--muted);padding:28px}
+@media(max-width:650px){
+  .report{align-items:flex-start;flex-direction:column}
+  .actions{width:100%}
+  .btn{flex:1}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap brand">
+    <div class="mark">Á</div>
+    <div>
+      <h1>Radar Ánade</h1>
+      <p class="sub">Archivo histórico de informes HTML</p>
+    </div>
+  </div>
+</header>
+<main class="wrap">
+  <div class="panel">
+    <div class="report">
+      <div class="meta">
+        <span class="date">17 de julio de 2026</span>
+        <span class="file">Radar_Anade_2026-07-17.html</span>
+      </div>
+      <div class="actions">
+        <a class="btn secondary" href="informes/Radar_Anade_2026-07-17.html">Abrir</a>
+        <a class="btn primary" href="informes/Radar_Anade_2026-07-17.html" download>Descargar HTML</a>
+      </div>
+    </div>
+    <p class="note">Los nuevos informes se añadirán aquí sin sustituir los anteriores.</p>
+  </div>
+</main>
+<footer>Ánade · Archivo Radar</footer>
+</body>
+</html>
