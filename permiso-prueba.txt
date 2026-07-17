@@ -1,0 +1,1 @@
+Prueba segura de permiso persistente para GitHub. Puede eliminarse después.
